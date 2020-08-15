@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_13_230723) do
+ActiveRecord::Schema.define(version: 2020_08_14_200810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,15 +36,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_230723) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "applications", force: :cascade do |t|
-    t.bigint "job_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["job_id"], name: "index_applications_on_job_id"
-    t.index ["user_id"], name: "index_applications_on_user_id"
-  end
-
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "website"
@@ -63,9 +54,20 @@ ActiveRecord::Schema.define(version: 2020_08_13_230723) do
     t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true
   end
 
+  create_table "job_applications", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "professional_experience"
+    t.text "reasons"
+    t.index ["job_id"], name: "index_job_applications_on_job_id"
+    t.index ["user_id"], name: "index_job_applications_on_user_id"
+  end
+
   create_table "jobs", force: :cascade do |t|
     t.string "title"
-    t.string "type"
+    t.string "job_type"
     t.string "seniority"
     t.float "salary"
     t.string "location"
@@ -99,7 +101,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_230723) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "applications", "jobs"
-  add_foreign_key "applications", "users"
+  add_foreign_key "job_applications", "jobs"
+  add_foreign_key "job_applications", "users"
   add_foreign_key "jobs", "companies"
 end

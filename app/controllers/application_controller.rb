@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
     include ActionController::HttpAuthentication::Token::ControllerMethods
   
+    def require_either_user_or_company_login
+      authenticate_company_token || authenticate_user_token
+    end
+
     def require_user_login
       authenticate_user_token || render_unauthorized('Access denied')
     end

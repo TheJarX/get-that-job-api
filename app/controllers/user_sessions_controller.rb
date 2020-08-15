@@ -15,7 +15,5 @@ class UserSessionsController < ApplicationController
         current_user&.authentication_token = nil
         current_user.save
         head(:ok)
-        head(:unauthorized)
-        end
     end
 end

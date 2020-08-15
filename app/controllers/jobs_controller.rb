@@ -1,16 +1,16 @@
 class JobsController < ApplicationController
   before_action :set_job, only: [:show, :update, :destroy]
-
+  before_action :require_company_login, except: [:index, :show]
   # GET /jobs
   def index
     @jobs = Job.all
 
-    render json: @jobs
+    render :index
   end
 
   # GET /jobs/1
   def show
-    render json: @job
+    render :show
   end
 
   # POST /jobs
@@ -18,18 +18,18 @@ class JobsController < ApplicationController
     @job = Job.new(job_params)
 
     if @job.save
-      render json: @job, status: :created, location: @job
+      render :show
     else
-      render json: @job.errors, status: :unprocessable_entity
+      head(:unprocessable_entity)
     end
   end
 
   # PATCH/PUT /jobs/1
   def update
     if @job.update(job_params)
-      render json: @job
+      render :show
     else
-      render json: @job.errors, status: :unprocessable_entity
+      head(:unprocessable_entity)
     end
   end
 
@@ -46,6 +46,6 @@ class JobsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def job_params
-      params.fetch(:job, {})
+      params.require(:job).permit(:title, :job_type, :seniority, :salary, :location, :introduction, :from_candidate, :candidate_profile, :job_requirements, :company_id)
     end
 end
