@@ -39,5 +39,7 @@ module GetThatJobApi
          resource '*', :headers => :any, :methods => [:get, :post, :options]
        end
     end
+    
+    config.middleware.use OliveBranch::Middleware
   end
 end
