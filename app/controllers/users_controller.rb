@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:index, :show, :update, :destroy]
   before_action :require_user_login, except: [:create]
 
-  # GET /users
-  # GET /users.json
-  # def index
-  #   @users = User.all
-  # end
+  # GET /users/:id/applications
+  def index
+    @applications = @user.job_applications
+    render :index
+  end
 
   # GET /users/1
   # GET /users/1.json

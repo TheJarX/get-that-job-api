@@ -1,1 +1,1 @@
-json.array! @users, partial: "users/user", as: :user
+json.array! @applications, partial: "job_applications/application", as: :application

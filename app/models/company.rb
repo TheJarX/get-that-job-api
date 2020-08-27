@@ -5,5 +5,5 @@ class Company < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :jobs
-  has_one_attached :logo
+  has_one_base64_attached :logo
 end

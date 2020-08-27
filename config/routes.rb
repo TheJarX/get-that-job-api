@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   end
   
   resources :users, except: [:index]
+  #Applications of a user
+  get 'users/:id/applications', to: 'users#index'
+  
   resources :companies
   resources :jobs
   # APPLY FOR A JOB
@@ -17,6 +20,5 @@ Rails.application.routes.draw do
   post 'jobs/:id/apply', to: 'job_applications#create'
   put 'jobs/:id/applications/:application_id', to: 'job_applications#update'
   delete 'jobs/:id/applications/:application_id', to: 'job_applications#destroy'
-
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
