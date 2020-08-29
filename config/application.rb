@@ -40,6 +40,7 @@ module GetThatJobApi
        end
     end
     
-    config.middleware.use OliveBranch::Middleware
+    config.middleware.use OliveBranch::Middleware, inflection: "camel"
+    # config.middleware.use OliveBranch::Middleware
   end
 end

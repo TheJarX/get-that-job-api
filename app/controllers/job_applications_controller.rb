@@ -7,7 +7,7 @@ class JobApplicationsController < ApplicationController
   # GET /applications.json
   def index
     @job = Job.find(params[:id])
-    @applications = @Job.job_applications
+    @applications = @job.job_applications
     render :index
   end
 
@@ -19,9 +19,9 @@ class JobApplicationsController < ApplicationController
   # POST /applications
   # POST /applications.json
   def create
+
     @job = Job.find(params[:id])
     @application = @job.job_applications.new(application_params)
-    @application.user_cv.attach(data: params[:user_cv])
     if @application.save
       @application = @job.job_applications.last
       render :show, status: :created
@@ -54,7 +54,13 @@ class JobApplicationsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
+    def permitted_params
+      params.permit(:userCv, :professionalExperience, :reasons, :userId)
+    end
     def application_params
-      params.permit(:user_cv, :professional_experience, :reasons, :user_id)
+      permitted_params.to_enum.to_h.entries.reduce({}){|acc, entrie| 
+        acc[entrie.first.to_s.underscore.to_sym] = entrie.last
+        acc
+      }
     end
 end

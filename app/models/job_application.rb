@@ -3,7 +3,7 @@ class JobApplication < ApplicationRecord
   validates :user_cv, presence:  true 
   belongs_to :job
   belongs_to :user
-  has_one_base64_attached :user_cv
+  has_one_attached :user_cv
 
   validate :correct_document_mime_type
 
